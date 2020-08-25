@@ -30,7 +30,7 @@ public class Duke {
 
         Scanner in = new Scanner(System.in);
         String userResponse;
-        List<String> list = new ArrayList<>();
+        List<Task> list = new ArrayList<>();
 
         printGreetings();
         do {
@@ -38,13 +38,22 @@ public class Duke {
             if (userResponse.equals("bye")) continue;
             printHorizontalLine();
             if (userResponse.equals("list")) {
-
+                System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < list.size(); i++) {
-                    System.out.println((i + 1) + ". " + list.get(i));
+                    System.out.println((i + 1) + ".[" + list.get(i).getStatusIcon() + "] " + list.get(i).getDescription());
+                }
+            } else if (userResponse.startsWith("done")) {
+                int taskIdentifier = Integer.parseInt(userResponse.split(" ")[1]);
+                if (taskIdentifier > 0 && taskIdentifier <= list.size()) {
+                    list.get(taskIdentifier - 1).markAsDone();
+                    System.out.println("Okay! \"" + list.get(taskIdentifier - 1).getDescription() + "\" is marked as "
+                            + "done" + ". " + "Keep on going!");
+                } else {
+                    System.out.println("Sorry, I can't find the task :(");
                 }
             } else {
-                list.add(userResponse);
-                System.out.println("added: " + userResponse);
+                list.add(new Task(userResponse));
+                System.out.println("New task added: " + userResponse);
             }
             printHorizontalLine();
         } while (!userResponse.equals("bye"));
