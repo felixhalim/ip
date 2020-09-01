@@ -20,33 +20,35 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    public static void main(String[] args) {
+    private static void printLogo() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
+    }
 
+    public static void main(String[] args) {
+        printLogo();
+        printGreetings();
         Scanner in = new Scanner(System.in);
         String userResponse;
         List<Task> list = new ArrayList<>();
-
-        printGreetings();
-        do {
+        while (true) {
             userResponse = in.nextLine();
-            if (userResponse.equals("bye")) continue;
+            if (userResponse.equals("bye")) break;
             printHorizontalLine();
             if (userResponse.equals("list")) {
                 int size = list.size();
                 if (size == 0) {
                     System.out.println("You have nothing on your list! Why not add one :D");
-                    continue;
-                }
-                System.out.printf("Here %s the %s in your list:%n", size > 1 ? "are" : "is", size > 1 ? "tasks" :
-                        "task");
-                for (int i = 0; i < list.size(); i++) {
-                    System.out.println((i + 1) + "." + list.get(i).getTask());
+                } else {
+                    System.out.printf("Here %s the %s in your list:%n", size > 1 ? "are" : "is", size > 1 ? "tasks" :
+                            "task");
+                    for (int i = 0; i < list.size(); i++) {
+                        System.out.println((i + 1) + "." + list.get(i).getTask());
+                    }
                 }
             } else if (userResponse.startsWith("done")) {
                 int taskIdentifier = Integer.parseInt(userResponse.split(" ")[1]);
@@ -59,14 +61,17 @@ public class Duke {
                 }
             } else {
                 if (userResponse.startsWith("todo")) {
+                    // e.g. : todo finish ip
                     String description = userResponse.split(" ", 2)[1];
                     list.add(new ToDo(description));
                 } else if (userResponse.startsWith("deadline")) {
+                    // e.g. : deadline finish ip /by tomorrow
                     String parsedResponse = userResponse.split(" ", 2)[1];
                     String description = parsedResponse.split(" /by ")[0];
                     String date = parsedResponse.split(" /by ")[1];
                     list.add(new Deadline(description, date));
                 } else if (userResponse.startsWith("event")) {
+                    // e.g. : event tp meeting /at monday, 7pm-8pm
                     String parsedResponse = userResponse.split(" ", 2)[1];
                     String description = parsedResponse.split(" /at ")[0];
                     String date = parsedResponse.split(" /at ")[1];
@@ -81,7 +86,7 @@ public class Duke {
                 System.out.printf("Now you have %d %s in the list.%n", size, size > 1 ? "tasks" : "task");
             }
             printHorizontalLine();
-        } while (!userResponse.equals("bye"));
+        }
         printFarewells();
     }
 }
