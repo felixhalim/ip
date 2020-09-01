@@ -1,0 +1,8 @@
+list
+todo learn automated test
+list
+deadline finish ip /by tuesday
+list
+done 2
+event meeting tp /at monday, 7pm-8pm
+list
