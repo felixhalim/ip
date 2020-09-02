@@ -37,12 +37,12 @@ Okay! I've marked this task as done: Keep on going!
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-[E][X] meeting tp (by: monday, 7pm-8pm)
+[E][X] meeting tp (at: monday, 7pm-8pm)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] learn automated test
 2.[D][V] finish ip (by: tuesday)
-3.[E][X] meeting tp (by: monday, 7pm-8pm)
+3.[E][X] meeting tp (at: monday, 7pm-8pm)
 ____________________________________________________________
