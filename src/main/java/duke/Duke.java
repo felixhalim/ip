@@ -1,3 +1,12 @@
+package duke;
+
+import duke.exception.EmptyArgumentException;
+import duke.exception.IllegalCommandException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
