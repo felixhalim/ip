@@ -6,3 +6,9 @@ list
 done 2
 event meeting tp /at monday, 7pm-8pm
 list
+felix
+done z
+done
+todo
+event
+deadline
