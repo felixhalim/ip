@@ -33,57 +33,84 @@ public class Duke {
         printLogo();
         printGreetings();
         Scanner in = new Scanner(System.in);
-        String userResponse;
+        String command;
         List<Task> list = new ArrayList<>();
         while (true) {
-            userResponse = in.nextLine();
-            if (userResponse.equals("bye")) break;
+            command = in.nextLine();
+            if (command.equals("bye")) break;
             printHorizontalLine();
-            if (userResponse.equals("list")) {
-                int size = list.size();
-                if (size == 0) {
-                    System.out.println("You have nothing on your list! Why not add one :D");
-                } else {
-                    System.out.printf("Here %s the %s in your list:%n", size > 1 ? "are" : "is", size > 1 ? "tasks" :
-                            "task");
-                    for (int i = 0; i < list.size(); i++) {
-                        System.out.println((i + 1) + "." + list.get(i).getTask());
+            try {
+                if (command.equals("list")) {
+                    int size = list.size();
+                    if (size == 0) {
+                        System.out.println("You have nothing on your list! Why not add one :D");
+                    } else {
+                        String listPlurality = size > 1 ? "are" : "is";
+                        String taskPlurality = size > 1 ? "tasks" : "task";
+                        System.out.printf("Here %s the %s in your list:%n", listPlurality, taskPlurality);
+                        for (int i = 0; i < list.size(); i++) {
+                            System.out.println((i + 1) + "." + list.get(i).getTask());
+                        }
                     }
-                }
-            } else if (userResponse.startsWith("done")) {
-                int taskIdentifier = Integer.parseInt(userResponse.split(" ")[1]);
-                if (taskIdentifier > 0 && taskIdentifier <= list.size()) {
-                    list.get(taskIdentifier - 1).markAsDone();
-                    System.out.println("Okay! I've marked this task as done: Keep on going!");
-                    System.out.println(list.get(taskIdentifier - 1).getTask());
+                } else if (command.startsWith("done")) {
+                    int taskIdentifier;
+                    try {
+                        taskIdentifier = Integer.parseInt(command.split(" ")[1]);
+                        if (taskIdentifier > 0 && taskIdentifier <= list.size()) {
+                            list.get(taskIdentifier - 1).markAsDone();
+                            System.out.println("Okay! I've marked this task as done: Keep on going!");
+                            System.out.println(list.get(taskIdentifier - 1).getTask());
+                        } else {
+                            System.out.println("Sorry, I can't find the task :(");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println(">.< The task identifier supposed to be number! Here is the correct format" +
+                                " \"done <number>\"");
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(">.< You can't leave the task identifier empty! The format supposed to " +
+                                "be \"done <number>\"");
+                    }
                 } else {
-                    System.out.println("Sorry, I can't find the task :(");
+                    if (command.startsWith("todo")) {
+                        // e.g. : todo finish ip
+                        try {
+                            String description = command.split(" ", 2)[1];
+                            list.add(new ToDo(description));
+                        } catch (IndexOutOfBoundsException e) {
+                            throw new EmptyArgumentException();
+                        }
+                    } else if (command.startsWith("deadline")) {
+                        // e.g. : deadline finish ip /by tomorrow
+                        try {
+                            String parsedResponse = command.split(" ", 2)[1];
+                            String description = parsedResponse.split(" /by ")[0];
+                            String date = parsedResponse.split(" /by ")[1];
+                            list.add(new Deadline(description, date));
+                        } catch (IndexOutOfBoundsException e) {
+                            throw new EmptyArgumentException();
+                        }
+                    } else if (command.startsWith("event")) {
+                        // e.g. : event tp meeting /at monday, 7pm-8pm
+                        try {
+                            String parsedResponse = command.split(" ", 2)[1];
+                            String description = parsedResponse.split(" /at ")[0];
+                            String date = parsedResponse.split(" /at ")[1];
+                            list.add(new Event(description, date));
+                        } catch (IndexOutOfBoundsException e) {
+                            throw new EmptyArgumentException();
+                        }
+                    } else {
+                        throw new IllegalCommandException();
+                    }
+                    int size = list.size();
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(list.get(size - 1).getTask());
+                    System.out.printf("Now you have %d %s in the list.%n", size, size > 1 ? "tasks" : "task");
                 }
-            } else {
-                if (userResponse.startsWith("todo")) {
-                    // e.g. : todo finish ip
-                    String description = userResponse.split(" ", 2)[1];
-                    list.add(new ToDo(description));
-                } else if (userResponse.startsWith("deadline")) {
-                    // e.g. : deadline finish ip /by tomorrow
-                    String parsedResponse = userResponse.split(" ", 2)[1];
-                    String description = parsedResponse.split(" /by ")[0];
-                    String date = parsedResponse.split(" /by ")[1];
-                    list.add(new Deadline(description, date));
-                } else if (userResponse.startsWith("event")) {
-                    // e.g. : event tp meeting /at monday, 7pm-8pm
-                    String parsedResponse = userResponse.split(" ", 2)[1];
-                    String description = parsedResponse.split(" /at ")[0];
-                    String date = parsedResponse.split(" /at ")[1];
-                    list.add(new Event(description, date));
-                } else {
-                    System.out.println("Unknown error!");
-                    continue;
-                }
-                int size = list.size();
-                System.out.println("Got it. I've added this task:");
-                System.out.println(list.get(size - 1).getTask());
-                System.out.printf("Now you have %d %s in the list.%n", size, size > 1 ? "tasks" : "task");
+            } catch (IllegalCommandException e) {
+                System.out.println("Oops, I don't understand your command :(");
+            } catch (EmptyArgumentException e) {
+                System.out.println(">.< Ouch! Please check your argument");
             }
             printHorizontalLine();
         }
