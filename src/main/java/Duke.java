@@ -44,8 +44,9 @@ public class Duke {
                 if (size == 0) {
                     System.out.println("You have nothing on your list! Why not add one :D");
                 } else {
-                    System.out.printf("Here %s the %s in your list:%n", size > 1 ? "are" : "is", size > 1 ? "tasks" :
-                            "task");
+                    String listPlurality = size > 1 ? "are" : "is";
+                    String taskPlurality = size > 1 ? "tasks" : "task";
+                    System.out.printf("Here %s the %s in your list:%n", listPlurality, taskPlurality);
                     for (int i = 0; i < list.size(); i++) {
                         System.out.println((i + 1) + "." + list.get(i).getTask());
                     }
