@@ -155,7 +155,8 @@ public class Duke {
 
     private static void loadData(List<Task> list) {
         try {
-            File data = new File("data/duke.txt");
+            File data = new File("C:\\Users\\felix\\OneDrive - National University of Singapore\\Semester " +
+                    "3\\CS2113t\\ip\\data\\duke.txt");
             Scanner dataEntry = new Scanner(data);
             while (dataEntry.hasNext()) {
                 String[] parsedData = dataEntry.nextLine().split(";", 4);
@@ -175,6 +176,7 @@ public class Duke {
                 }
             }
         } catch (FileNotFoundException e) {
+            System.out.println(e);
             System.out.println("File not found");
         }
     }
