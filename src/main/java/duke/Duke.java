@@ -9,6 +9,8 @@ import duke.task.ToDo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,19 +42,23 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         printLogo();
         printGreetings();
         startChatbot();
         printFarewells();
     }
 
-    private static void startChatbot() {
+    private static void startChatbot() throws IOException {
+        String filePath = "C:\\Users\\felix\\OneDrive - National University of Singapore\\Semester " +
+                "3\\CS2113t\\ip\\data\\duke.txt";
+
         Scanner in = new Scanner(System.in);
         String command;
         List<Task> list = new ArrayList<>();
-        loadData(list);
+        loadData(list, filePath);
         while (in.hasNextLine()) {
+            saveData(list, filePath);
             command = in.nextLine();
             if (command.equals("bye")) break;
             printHorizontalLine();
@@ -153,10 +159,34 @@ public class Duke {
         }
     }
 
-    private static void loadData(List<Task> list) {
+    private static void saveData(List<Task> list, String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for (Task t : list) {
+            String taskInformation = t.getTask();
+            String taskType = taskInformation.substring(1, 2);
+            String taskStatus = (taskInformation.substring(4, 5).equals("V") ? "1" : "0");
+            String taskDescription = taskInformation.substring(7);
+            if (taskDescription.contains("(by:")) {
+                String taskTime = taskDescription.substring(taskDescription.indexOf("(by: ") + 5,
+                        taskDescription.indexOf(")", taskDescription.indexOf("(by: ")));
+                taskDescription = taskDescription.substring(0, taskDescription.indexOf("(by:") - 1);
+                fw.write(taskType + ";" + taskStatus + ";" + taskDescription + ";" + taskTime);
+            } else if (taskDescription.contains("(at:")) {
+                String taskTime = taskDescription.substring(taskDescription.indexOf("(at: ") + 5,
+                        taskDescription.indexOf(")", taskDescription.indexOf("(at: ")));
+                taskDescription = taskDescription.substring(0, taskDescription.indexOf("(at:") - 1);
+                fw.write(taskType + ";" + taskStatus + ";" + taskDescription + ";" + taskTime);
+            } else {
+                fw.write(taskType + ";" + taskStatus + ";" + taskDescription);
+            }
+            fw.write("\n");
+        }
+        fw.close();
+    }
+
+    private static void loadData(List<Task> list, String filePath) {
         try {
-            File data = new File("C:\\Users\\felix\\OneDrive - National University of Singapore\\Semester " +
-                    "3\\CS2113t\\ip\\data\\duke.txt");
+            File data = new File(filePath);
             Scanner dataEntry = new Scanner(data);
             while (dataEntry.hasNext()) {
                 String[] parsedData = dataEntry.nextLine().split(";", 4);
@@ -170,7 +200,7 @@ public class Duke {
                     list.add(new Deadline(description, date, status));
                 } else if (type.equalsIgnoreCase("e")) {
                     String date = parsedData[3];
-                    list.add(new Deadline(description, date, status));
+                    list.add(new Event(description, date, status));
                 } else {
                     System.out.println("Format Error!");
                 }
