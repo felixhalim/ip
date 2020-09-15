@@ -41,6 +41,11 @@ public class Duke {
     public static void main(String[] args) {
         printLogo();
         printGreetings();
+        startChatbot();
+        printFarewells();
+    }
+
+    private static void startChatbot() {
         Scanner in = new Scanner(System.in);
         String command;
         List<Task> list = new ArrayList<>();
@@ -123,6 +128,5 @@ public class Duke {
             }
             printHorizontalLine();
         }
-        printFarewells();
     }
 }
