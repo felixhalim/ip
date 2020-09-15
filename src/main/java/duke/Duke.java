@@ -44,7 +44,7 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String command;
         List<Task> list = new ArrayList<>();
-        while (true) {
+        while (in.hasNextLine()) {
             command = in.nextLine();
             if (command.equals("bye")) break;
             printHorizontalLine();
@@ -78,6 +78,26 @@ public class Duke {
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println(">.< You can't leave the task identifier empty! The format supposed to " +
                                 "be \"done <number>\"");
+                    }
+                } else if (command.startsWith("delete")) {
+                    int taskIdentifier;
+                    try {
+                        taskIdentifier = Integer.parseInt(command.split(" ")[1]);
+                        if (taskIdentifier > 0 && taskIdentifier <= list.size()) {
+                            System.out.println("Noted. I've removed this task");
+                            System.out.println(" " + list.get(taskIdentifier - 1).getTask());
+                            list.remove(taskIdentifier - 1);
+                            int size = list.size();
+                            System.out.printf("Now you have %d %s in the list.%n", size, size > 1 ? "tasks" : "task");
+                        } else {
+                            System.out.println("Sorry, I can't find the task :(");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println(">.< The task identifier supposed to be number! Here is the correct format" +
+                                " \"delete <number>\"");
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(">.< You can't leave the task identifier empty! The format supposed to " +
+                                "be \"delete <number>\"");
                     }
                 } else {
                     if (command.startsWith("todo")) {
