@@ -7,6 +7,8 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -41,9 +43,15 @@ public class Duke {
     public static void main(String[] args) {
         printLogo();
         printGreetings();
+        startChatbot();
+        printFarewells();
+    }
+
+    private static void startChatbot() {
         Scanner in = new Scanner(System.in);
         String command;
         List<Task> list = new ArrayList<>();
+        loadData(list);
         while (in.hasNextLine()) {
             command = in.nextLine();
             if (command.equals("bye")) break;
@@ -143,6 +151,31 @@ public class Duke {
             }
             printHorizontalLine();
         }
-        printFarewells();
+    }
+
+    private static void loadData(List<Task> list) {
+        try {
+            File data = new File("data/duke.txt");
+            Scanner dataEntry = new Scanner(data);
+            while (dataEntry.hasNext()) {
+                String[] parsedData = dataEntry.nextLine().split(";", 4);
+                String type = parsedData[0];
+                String status = parsedData[1];
+                String description = parsedData[2];
+                if (type.equalsIgnoreCase("t")) {
+                    list.add(new ToDo(description, status));
+                } else if (type.equalsIgnoreCase("d")) {
+                    String date = parsedData[3];
+                    list.add(new Deadline(description, date, status));
+                } else if (type.equalsIgnoreCase("e")) {
+                    String date = parsedData[3];
+                    list.add(new Deadline(description, date, status));
+                } else {
+                    System.out.println("Format Error!");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
     }
 }
