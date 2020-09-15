@@ -8,6 +8,11 @@ public class Deadline extends Task {
         this.date = date;
     }
 
+    public Deadline(String description, String date, String isDone) {
+        super(description, isDone);
+        this.date = date;
+    }
+
     @Override
     public String getTask() {
         return String.format("[D]%s (by: %s)", super.getTask(), date);
