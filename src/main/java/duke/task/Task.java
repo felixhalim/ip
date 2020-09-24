@@ -11,7 +11,7 @@ public class Task {
 
     public Task(String description, String isDone) {
         this.description = description;
-        this.isDone = isDone.equals("1") ? true : false;
+        this.isDone = isDone.equals("1");
     }
 
     public String getStatusIcon() {
