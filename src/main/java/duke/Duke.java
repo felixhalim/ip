@@ -20,8 +20,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke("C:\\Users\\felix\\OneDrive - National University of Singapore\\Semester 3\\CS2113t\\ip\\data\\duke" +
-                ".txt").run();
+        new Duke("data/duke.txt").run();
     }
 
     public void run() {
