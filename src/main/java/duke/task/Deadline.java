@@ -13,6 +13,11 @@ public class Deadline extends Task {
         this.date = date;
     }
 
+    /**
+     * Returns the details of the task.
+     *
+     * @return String of the task details.
+     */
     @Override
     public String getTask() {
         return String.format("[D]%s (by: %s)", super.getTask(), date);

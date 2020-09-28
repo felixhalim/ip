@@ -27,6 +27,13 @@ public class DeleteCommand extends Command {
         return false;
     }
 
+    /**
+     * Removes the task specified based on the task type and taskIdentifier from the TaskList.
+     *
+     * @param tasks   the current state of TaskList.
+     * @param ui      the current state of Ui.
+     * @param storage the current state of Storage.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         List<Task> list = tasks.getList();

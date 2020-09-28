@@ -14,6 +14,13 @@ public class ExitCommand extends Command {
         return true;
     }
 
+    /**
+     * Shows the farewell message.
+     *
+     * @param tasks   the current state of TaskList.
+     * @param ui      the current state of Ui.
+     * @param storage the current state of Storage.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.showFarewells();

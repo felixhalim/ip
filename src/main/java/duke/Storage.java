@@ -21,6 +21,13 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Write the current List of Task to filepath in the following format:
+     * [task type];[task status];[task description];[task time]
+     *
+     * @param list the current List of Task
+     * @throws DukeException If there is Input or Output Error.
+     */
     public void save(List<Task> list) throws DukeException {
         try {
             FileWriter fw = new FileWriter(filePath);
@@ -50,6 +57,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Returns List of Task object read in the given file path.
+     * If the filepath is unset, it will return a blank List.
+     *
+     * @return List of Task.
+     * @throws DukeException If file is not found in the file path.
+     */
     public List<Task> load() throws DukeException {
         List<Task> list = new ArrayList<>();
         try {
