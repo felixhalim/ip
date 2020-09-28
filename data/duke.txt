@@ -1,1 +1,2 @@
-E;0;cs2113 lecture;friday 18 september 2020 from 4pm to 6pm
+D;0;Submit movie review;17 Nov
+E;0;Netflix party;9pm, Recess Week
