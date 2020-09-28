@@ -68,6 +68,12 @@ public class Storage {
         List<Task> list = new ArrayList<>();
         try {
             File data = new File(filePath);
+
+            // If the current file path is not exist then create new one
+            // Reference : https://stackoverflow.com/questions/2833853/create-whole-path-automatically-when-writing-to-a-new-file
+            if (! data.exists()){
+                data.getParentFile().mkdirs();
+            }
             Scanner dataEntry = new Scanner(data);
             while (dataEntry.hasNext()) {
                 String[] parsedData = dataEntry.nextLine().split(";", 4);
