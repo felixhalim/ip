@@ -61,7 +61,7 @@ public class AddCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         List<Task> list = tasks.getList();
-        int size = list.size();
+        int size;
         if (type.equalsIgnoreCase("todo")) {
             list.add(new ToDo(description));
         } else if (type.equalsIgnoreCase("deadline")) {
