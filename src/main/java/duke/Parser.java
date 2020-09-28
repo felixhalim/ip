@@ -4,7 +4,21 @@ import duke.command.*;
 import duke.exception.DukeEmptyArgumentException;
 import duke.exception.DukeIllegalCommandException;
 
+
+/**
+ * A <code>Parser</code> object will parse given <code>String command</code>
+ * and return the corresponding <code>Command</code> object.
+ */
+
 public class Parser {
+
+    /**
+     * Returns the corresponding command .
+     * If the position is unset, NaN is returned.
+     *
+     * @param command the full command inputted by User.
+     * @return Command object that correspond to the command.
+     */
     public static Command parse(String command) {
         try {
             if (command.equals("bye")) {

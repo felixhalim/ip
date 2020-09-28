@@ -27,6 +27,13 @@ public class DoneCommand extends Command {
         return false;
     }
 
+    /**
+     * Marks the task specified based on the task type in the TaskList as done.
+     *
+     * @param tasks   the current state of TaskList.
+     * @param ui      the current state of Ui.
+     * @param storage the current state of Storage.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         List<Task> list = tasks.getList();

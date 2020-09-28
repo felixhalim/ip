@@ -3,6 +3,10 @@ package duke;
 import java.util.Scanner;
 
 public class Ui {
+
+    /**
+     * Shows the welcome message during the program startup.
+     */
     public void showWelcome() {
         printLogo();
         showLine();
@@ -10,10 +14,18 @@ public class Ui {
         showLine();
     }
 
+    /**
+     * Shows the farewell message during the program termination.
+     */
     public void showFarewells() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
+    /**
+     * Shows the message of corresponding error.
+     *
+     * @param errorMessage the description of the error.
+     */
     public void showError(String errorMessage) {
         System.out.println(errorMessage);
     }

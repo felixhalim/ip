@@ -16,10 +16,20 @@ public class TaskList {
         this.list = new ArrayList<>(list);
     }
 
+    /**
+     * Returns List of Task object stored in list.
+     *
+     * @return List of Task.
+     */
     public List<Task> getList() {
         return list;
     }
 
+    /**
+     * Sets list to the List of Task object passed.
+     *
+     * @param list the current List of Task.
+     */
     public void setList(List<Task> list) {
         this.list = new ArrayList<>(list);
     }

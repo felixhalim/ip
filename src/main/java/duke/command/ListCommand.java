@@ -17,6 +17,13 @@ public class ListCommand extends Command {
         return false;
     }
 
+    /**
+     * Shows List of Task content.
+     *
+     * @param tasks   the current state of TaskList.
+     * @param ui      the current state of Ui.
+     * @param storage the current state of Storage.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         List<Task> list = tasks.getList();
