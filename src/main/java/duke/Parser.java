@@ -18,6 +18,9 @@ public class Parser {
             }
             if (command.startsWith("delete ")) {
                 return new DeleteCommand(command);
+            }
+            if (command.startsWith("find ")) {
+                return new FindCommand(command);
             } else {
                 return new AddCommand(command);
             }
