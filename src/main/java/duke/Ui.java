@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Ui {
 
+    Scanner in = new Scanner(System.in);
     /**
      * Shows the welcome message during the program startup.
      */
@@ -36,7 +37,6 @@ public class Ui {
 
     public String readCommand() {
         System.out.print(">> ");
-        Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 
